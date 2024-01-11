@@ -4,6 +4,7 @@
         <li><a href="/guides">Guides</a></li>
         <li><a href="/users">Users</a></li>
         <li><a href="/table">Table</a></li>
+        <li><a href="/form">Form</a></li>
         <li><a href="/about">About</a></li>
         
     </ul>

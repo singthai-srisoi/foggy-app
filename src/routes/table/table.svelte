@@ -1,6 +1,8 @@
 <script>
+  import { onMount } from "svelte";
+
     // recieve data from parent component
-    export let data // the data to be displayed in list of objects
+    export let data = [] // the data to be displayed in list of objects
     export let skip = [] // the keys to be skipped in table
     export let response = new Promise((resolve, reject) => {
         resolve(true)
@@ -13,20 +15,32 @@
     export let deleted_data = {}
 
     let types = {}
-    data[0] && Object.keys(data[0]).forEach(item => {
-        types[item] = typeof data[0][item]
-    })
+    let keys = []
+    let proccessedKeys = []
 
-    let keys = Object.keys(data[0]).filter(item => !skip.includes(item))
-    let proccessedKeys = keys.map(item => {
-                            item = item.replace('_', ' ')
-                            item = item.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())
-                            return item        
-                        })
-
-    
     let tr_bg_color = ''
 
+    const processing = (data, keys, proccessedKeys) => {
+        if (Array.isArray(data)){
+            if (data.length > 0) {
+                data[0] && Object.keys(data[0]).forEach(item => {
+                    types[item] = typeof data[0][item]
+                })
+
+                keys = Object.keys(data[0]).filter(item => !skip.includes(item))
+                proccessedKeys = keys.map(item => {
+                    item = item.replace('_', ' ')
+                    item = item.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())
+                    return item        
+                }) 
+                                    
+                return {data, keys, proccessedKeys}
+            }
+        } else {
+            data = []
+        }
+    }
+    
     const exit_editing_mode = (tr) => {
         tr.classList.remove('editing')
         tr.style.backgroundColor = tr_bg_color
@@ -58,7 +72,6 @@
             item.innerText = dict[item.dataset.key]
         })
     }
-
 
     async function handle_dbclick ( event ) {
         let target = event.target
@@ -106,6 +119,15 @@
         })
     }
 
+    // make sure table relaoading when data changed
+    $: {
+        let res = processing(data, keys, proccessedKeys)
+        if (res) {
+            data = res.data
+            keys = res.keys
+            proccessedKeys = res.proccessedKeys
+        }
+    }
 </script>
 
 {#if data.length > 0}
@@ -142,9 +164,6 @@
 {:else}
     <h1>No Data</h1>
 {/if}
-
-
-
 
 <style>
 
