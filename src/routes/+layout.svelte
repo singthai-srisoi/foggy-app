@@ -26,7 +26,9 @@
     footer {
         background-color: #333;
         color: #fff;
-        padding: 10px;
+        padding: 0;
+        padding-top: 10px;
+        padding-bottom: 10px;
         text-align: center;
         position: relative;
         bottom: 0;

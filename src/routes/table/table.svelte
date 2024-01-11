@@ -16,7 +16,6 @@
     data[0] && Object.keys(data[0]).forEach(item => {
         types[item] = typeof data[0][item]
     })
-    // console.table(types)
 
     let keys = Object.keys(data[0]).filter(item => !skip.includes(item))
     let proccessedKeys = keys.map(item => {
@@ -81,48 +80,32 @@
                 new_data = dict_cast_type(new_data)
                 edited_data = new_data
                 
-                // wait for promise to be completed
                 let res = await response
-
                 if (res.ok || dev) {
-                    // exit editing mode
                     exit_editing_mode(selected_tr)
                 } else {
-                    // restore data
                     restore_data(selected_tr, temp)
-                    // exit editing mode
                     exit_editing_mode(selected_tr)
                 }
             } else if (event.key == 'Escape') {
-                // restore data
                 restore_data(selected_tr, temp)
-                // exit editing mode
                 exit_editing_mode(selected_tr)
             } else if (event.key == 'Delete') {
-                
-                // alert before delete
                 let confirm = window.confirm('Are you sure you want to delete this item?')
                 // delete data
                 deleted_data = temp
 
-                // wait for promise to be completed
                 let res = await response
-                
                 if (dev || (res && confirm)) {
-                    // remove tr
                     selected_tr.remove()
                 } else {
-                    // restore data
                     restore_data(selected_tr, temp)
-                    // exit editing mode
                     exit_editing_mode(selected_tr)
                 }
             }
         })
     }
 
-    // $: console.table(deleted_data)
-    // $: console.log(types)
 </script>
 
 {#if data.length > 0}
@@ -132,9 +115,9 @@
         <tr>
             {#each proccessedKeys as key}
                 {#if key == 'Id'}
-                <th hidden>{key}</th>
+                <th hidden><div>{key}</div></th>
                 {:else}
-                <th>{key}</th>
+                <th><div>{key}</div></th>
                 {/if}
             {/each}
         </tr>
@@ -144,10 +127,10 @@
         <tr>
             {#each keys as key}
                 {#if key == 'id'}
-                <td data-key="{key}" hidden>{item[key]}</td>
+                <td data-key="{key}" hidden><div>{item[key]}</div></td>
                 {:else}
                 <td data-key="{key}" on:dblclick={handle_dbclick}>
-                    {item[key]}
+                    <div>{item[key]}</div>
                 </td>
                 {/if}
             {/each}
@@ -168,17 +151,33 @@
     table {
         border-collapse: collapse;
         width: 100%;
+        min-width: 300px;
         text-align: center;
+        
+    }
+
+    table td {
+        border: 1px solid #333;
+    }
+    table th {
+        border: 1px solid #eeeede;
     }
 
     table thead tr th {
         padding: 10px;
         background-color: #333;
         color: #fff;
+        resize: horizontal;
+        overflow: auto;
+        
     }
 
     table tbody tr:nth-child(even) {
         background-color: #f2f2f2;
+    }
+
+    table tbody tr:hover {
+        background-color: #eeeede;
     }
 
     td {
