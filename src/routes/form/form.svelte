@@ -31,7 +31,7 @@
             form.reset()
             form_elements[0].focus()
             current_index = 0
-        } else if (event.key == "ArrowUp" || event.key == "ArrowLeft") {
+        } else if (event.key == "ArrowUp") {
             // down key and right travel to next
             event.preventDefault()
             if (index == 0) {
@@ -41,7 +41,7 @@
                 form_elements[index - 1].focus()
                 current_index = index - 1
             }
-        } else if (event.key == "ArrowDown" || event.key == "ArrowRight") {
+        } else if (event.key == "ArrowDown") {
             // up key and left travel to previous
             event.preventDefault()
             if (index == form_elements.length - 1) {
