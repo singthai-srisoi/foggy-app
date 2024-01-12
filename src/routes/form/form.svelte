@@ -71,6 +71,7 @@
 
     <input type="text" placeholder="name" name="name" required>
     <input type="text" placeholder="age" name="age">
+    <input type="text" placeholder="email" name="email">
 
     <button type="submit">Add</button>
 </form>

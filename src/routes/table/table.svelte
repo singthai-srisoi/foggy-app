@@ -71,12 +71,15 @@
         tr.querySelectorAll('td').forEach(item => {
             item.contentEditable = false
         })
+
+        // refresh data
+        data = temp_data
     }
 
     const tr_to_dict = (tr) => {
         let new_data = {}
         tr.querySelectorAll('td').forEach(item => {
-            new_data[item.dataset.key] = item.innerText
+            new_data[item.dataset.key] = item.innerText.trim()
         })
         return new_data
     }
@@ -110,14 +113,17 @@
         target.focus()
 
         // listen for enter key
-        selected_tr.addEventListener('keydown', async event => {
+        selected_tr.addEventListener('keydown', event => {
             if (event.key == 'Enter') {
                 let new_data = tr_to_dict(selected_tr)
                 new_data = dict_cast_type(new_data)
                 edited_data = new_data
                 
-                let res = await response
+                let res = response
                 if (res.ok || dev) {
+                    selected_tr.querySelectorAll('td').forEach(item => {
+                        item.innerText = new_data[item.dataset.key]
+                    })
                     exit_editing_mode(selected_tr)
                 } else {
                     restore_data(selected_tr, temp)
@@ -131,8 +137,8 @@
                 // delete data
                 deleted_data = temp
 
-                let res = await response
-                if (dev || (res && confirm)) {
+                let res = response
+                if (dev || (res.ok && confirm)) {
                     selected_tr.remove()
                 } else {
                     restore_data(selected_tr, temp)
@@ -141,6 +147,8 @@
             }
         })
     }
+
+
 
     const handle_clear_search = () => {
         search_value = ''
@@ -156,15 +164,14 @@
         }
     }
     $: {
-        let res = filter_key(data, search_value)
-        if (res && search_value != '') {
+        if (search_value != '') {
+            let res = filter_key(data, search_value)
             data = res.new_list
             search_value = res.key
         } else {
             data = temp_data
         }
     }
-    let check = 0
 </script>
 
 
@@ -172,6 +179,7 @@
 <input type="text" name="search" bind:value={search_value} placeholder="search">
 <button on:click={handle_clear_search}>Clear</button>
 {/if}
+{#key data.length}
 {#if data.length > 0}
 
 <table>
@@ -188,14 +196,15 @@
     </thead>
     <tbody>
         {#each data as item}
+        
         <tr>
+            
             {#each keys as key}
                 {#if key == 'id'}
                 <td data-key="{key}" hidden>{item[key]}</td>
                 {:else}
                 <td data-key="{key}" on:dblclick={handle_dbclick}>
                     {item[key]}
-                    {check++}
                 </td>
                 {/if}
             {/each}
@@ -207,7 +216,7 @@
 {:else}
     <h1>No Data</h1>
 {/if}
-
+{/key}
 <style>
 
     table {
