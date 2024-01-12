@@ -1,14 +1,13 @@
 <script>
-  import { onMount } from "svelte";
 
     // recieve data from parent component
-    export let data = [] // the data to be displayed in list of objects
-    export let skip = [] // the keys to be skipped in table
+    export let data = []
+    export let skip = []
     export let response = new Promise((resolve, reject) => {
         resolve(true)
-    }) // the promise to be resolved or rejected
-    export let dev = false // to be used in development mode
-    // dev mode will not wait for send request to server
+    })
+    export let dev = false 
+    export let search = true
 
     // to be bind and use in parent component
     export let edited_data = {}
@@ -17,8 +16,21 @@
     let types = {}
     let keys = []
     let proccessedKeys = []
-
     let tr_bg_color = ''
+    let search_value = ''
+    const temp_data = data
+
+    const filter_key = (list, key) => {
+        let new_list = []
+        list.forEach(obj => {
+            const value = Object.values(obj).join(' ')
+            if (value.includes(key)) {
+                new_list.push(obj)
+            }
+        })
+
+        return {new_list, key}
+    }
 
     const processing = (data, keys, proccessedKeys) => {
         if (Array.isArray(data)){
@@ -41,8 +53,19 @@
         }
     }
     
-    const exit_editing_mode = (tr) => {
+    const exit_editing_mode = (tr, success=true) => {
         tr.classList.remove('editing')
+
+        let keyframes = [
+            {backgroundColor: success ? '#c0ffb0' : '#ffb0b0'},
+            {backgroundColor: tr_bg_color}
+        ]
+        let timing = {
+            duration: 1000,
+            iterations: 1
+        }
+        tr.animate(keyframes, timing)
+        
         tr.style.backgroundColor = tr_bg_color
         tr_bg_color = tr.style.backgroundColor
         tr.querySelectorAll('td').forEach(item => {
@@ -119,6 +142,10 @@
         })
     }
 
+    const handle_clear_search = () => {
+        search_value = ''
+    }
+
     // make sure table relaoading when data changed
     $: {
         let res = processing(data, keys, proccessedKeys)
@@ -128,8 +155,23 @@
             proccessedKeys = res.proccessedKeys
         }
     }
+    $: {
+        let res = filter_key(data, search_value)
+        if (res && search_value != '') {
+            data = res.new_list
+            search_value = res.key
+        } else {
+            data = temp_data
+        }
+    }
+    let check = 0
 </script>
 
+
+{#if search}
+<input type="text" name="search" bind:value={search_value} placeholder="search">
+<button on:click={handle_clear_search}>Clear</button>
+{/if}
 {#if data.length > 0}
 
 <table>
@@ -149,10 +191,11 @@
         <tr>
             {#each keys as key}
                 {#if key == 'id'}
-                <td data-key="{key}" hidden><div>{item[key]}</div></td>
+                <td data-key="{key}" hidden>{item[key]}</td>
                 {:else}
                 <td data-key="{key}" on:dblclick={handle_dbclick}>
-                    <div>{item[key]}</div>
+                    {item[key]}
+                    {check++}
                 </td>
                 {/if}
             {/each}
@@ -201,6 +244,11 @@
 
     td {
         padding: 10px;
+    }
+
+    input[name="search"] {
+        margin-bottom: 10px;
+        margin-top: 10px;
     }
 
 </style>
