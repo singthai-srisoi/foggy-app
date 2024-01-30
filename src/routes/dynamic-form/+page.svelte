@@ -5,13 +5,6 @@
 
     let form = item
 
-    const new_field = {
-        type: 'text',
-        name: '',
-        label: '',
-        placeholder: '',
-        value: ''
-    }
     const format_json = (json) => {
         // add \t and \n to json string
         let result = ''
@@ -36,7 +29,13 @@
     }
 
     const add_field = () => {
-        console.log('add field')
+        const new_field = {
+            type: 'text',
+            name: '',
+            label: '',
+            placeholder: '',
+            value: ''
+        }
         form = [...form, new_field]
     }
 

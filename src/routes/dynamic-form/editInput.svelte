@@ -138,15 +138,6 @@
 
         <tr>
             <td>
-                <label for="value">value</label>
-            </td>
-            <td>
-                <input type="text" name="value" value={field.value} on:change={handle_input}/>
-            </td>    
-        </tr>
-
-        <tr>
-            <td>
                 <label for="placeholder">placeholder</label>
             </td>
             <td>
