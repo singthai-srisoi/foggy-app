@@ -6,6 +6,8 @@
         <li><a href="/table">Table</a></li>
         <li><a href="/form">Form</a></li>
         <li><a href="/about">About</a></li>
+        <li><a href="/dynamic-form">Dynamic Form</a></li>
+
         
     </ul>
 </nav>

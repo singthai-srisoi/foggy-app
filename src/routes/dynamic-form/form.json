@@ -1,0 +1,66 @@
+[
+    {
+        "id": 1,
+        "type": "text",
+        "label": "Name",
+        "placeholder": "Name",
+        "name": "name",
+        "required": true,
+        "validation": "^([a-zA-Z]{2,30})$"
+    },
+    {
+        "id": 2,
+        "type": "number",
+        "label": "Age",
+        "placeholder": "Age",
+        "name": "age",
+        "required": true,
+        "min": 18,
+        "max": 99,
+        "step": 1
+    },
+    {
+        "id": 3,
+        "type": "text",
+        "label": "Where do you live?",
+        "placeholder": "enter your address",
+        "name": "address",
+        "required": true,
+        "validation": "none"
+    },
+    {
+        "id": 4,
+        "type": "select",
+        "label": "Favorite color",
+        "placeholder": "",
+        "name": "color",
+        "required": true,
+        "validation": "none",
+        "options": [
+            {
+                "value": "red",
+                "label": "red",
+                "selected": true
+            },
+            {
+                "value": "blue",
+                "label": "blue",
+                "selected": false
+            },
+            {
+                "value": "green",
+                "label": "green",
+                "selected": false
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "type": "text",
+        "label": "Do you find this form useful? Give us your feedback!",
+        "placeholder": "enter your feedback",
+        "name": "feedback",
+        "required": true,
+        "validation": "none"
+    }
+]
