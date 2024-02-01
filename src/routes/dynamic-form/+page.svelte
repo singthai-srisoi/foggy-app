@@ -52,6 +52,22 @@
         }
     }
 
+    let success = ''
+    let error = ''
+
+    const handle_submit = (e) => {
+        e.preventDefault()
+        const form = e.target
+        if (!form.checkValidity()) {
+            error = 'Please fill all the required fields'
+            alert('Please fill all the required fields')
+            return
+        }
+        success = 'Form submitted'
+        form.reset()
+        return
+    }
+
     $: {
         // console.log(form)
         code = format_json(JSON.stringify(form))
@@ -65,11 +81,19 @@
 <div class="nav">
     <button class="toggle" on:click={toggle_view}>Edit</button>
 </div>
+<div class="msg">
+    {#if success}
+    <p class="success">{success}</p>
+    {:else if error}
+    <p class="error">{error}</p>
+    {/if}
+</div>
 <div class="view-form">
-    <form action="" on:submit={e => e.preventDefault()}>
+    <form action="" on:submit={handle_submit}>
         {#each form as field}
             <Input field={field} />
         {/each}
+        <button type="submit">Submit</button>
     </form>
 </div>
 {:else}

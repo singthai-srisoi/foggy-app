@@ -6,7 +6,7 @@
         "placeholder": "Name",
         "name": "name",
         "required": true,
-        "validation": "^([a-zA-Z]{2,30})$"
+        "validation": "^[Ss]ingthai$"
     },
     {
         "id": 2,
@@ -26,7 +26,7 @@
         "placeholder": "enter your address",
         "name": "address",
         "required": true,
-        "validation": "none"
+        "validation": ""
     },
     {
         "id": 4,
@@ -35,7 +35,7 @@
         "placeholder": "",
         "name": "color",
         "required": true,
-        "validation": "none",
+        "validation": "",
         "options": [
             {
                 "value": "red",
@@ -61,6 +61,6 @@
         "placeholder": "enter your feedback",
         "name": "feedback",
         "required": true,
-        "validation": "none"
+        "validation": ""
     }
 ]

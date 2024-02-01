@@ -1,0 +1,32 @@
+[
+    {
+        "front": {
+            "title": "Why is fire hot?",
+            "content": "Did you ever burn your hand on a hot stove?"
+        },
+        "back": {
+            "title": "Heat",
+            "content": "The fire is hot because of the heat it produces."
+        }
+    },
+    {
+        "front": {
+            "title": "Why is the sky blue?",
+            "content": "Did you ever wonder why the sky is blue?"
+        },
+        "back": {
+            "title": "Atmospheric Scattering",
+            "content": "This is because of the way the light is scattered in the atmosphere."
+        }
+    },
+    {
+        "front": {
+            "title": "Is flame a plasma?",
+            "content": "Flame always looks like it is made of plasma. But is it really?"
+        },
+        "back": {
+            "title": "Flame",
+            "content": "Flame is a mixture of reacting gases and solids emitting visible, infrared, and sometimes ultraviolet light, the frequency spectrum of which depends on the chemical composition of the burning material and intermediate reaction products."
+        }
+    }
+]

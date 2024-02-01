@@ -1,23 +1,27 @@
 <script>
     export let field = {}
 
+    if (field.validation == "" || field.validation == undefined || field.validation == null || field.validation == "none") {
+        field.validation = ".*"
+    }
+
 </script>
 <div>
 {#if field.type == "text" }
     
     <label for={field.name}>{field.label}</label>
-    <input type={field.type} name={field.name} placeholder={field.placeholder} />
+    <input type={field.type} name={field.name} placeholder={field.placeholder} pattern={field.validation} required={field.required} />
 
 {:else if field.type == "number"}
 
     <label for={field.name}>{field.label}</label>
     <input type={field.type} name={field.name} placeholder={field.placeholder} 
-        min={field.min} max={field.max} step={field.step} />
+        min={field.min} max={field.max} step={field.step} required={field.required} />
     
 {:else if field.type == "select"}
 
     <label for={field.name}>{field.label}</label>
-    <select name={field.name}>
+    <select name={field.name} required={field.required}>
         {#each field.options as option}
             {#if option.selected}
                 <option value={option.value} selected>{option.label}</option>
@@ -44,7 +48,7 @@
 {:else if field.type == "textarea"}
 
     <label for={field.name}>{field.label}</label>
-    <textarea name={field.name} placeholder={field.placeholder}></textarea>
+    <textarea name={field.name} placeholder={field.placeholder} required={field.required}></textarea>
 
 {:else if field.type == "hidden"}
 
@@ -57,12 +61,12 @@
 {:else if field.type == "date"}
 
     <label for={field.name}>{field.label}</label>
-    <input type={field.type} name={field.name} />
+    <input type={field.type} name={field.name} required={field.required} />
 
 {:else if field.type == "file"}
 
     <label for={field.name}>{field.label}</label>
-    <input type={field.type} name={field.name} />
+    <input type={field.type} name={field.name} required={field.required} />
 
 {/if}
 </div>
