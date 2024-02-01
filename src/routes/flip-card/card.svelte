@@ -61,8 +61,10 @@
 
 .flip-card-front, .flip-card-back {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
+    padding: 20px;
+    border-radius: 3px;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }

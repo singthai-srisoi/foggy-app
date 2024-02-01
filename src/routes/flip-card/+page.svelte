@@ -1,12 +1,12 @@
 <script>
-    import Card from "./card.svelte";
-    import items from "./cards.json";
+    import Card from "./card.svelte"
+    import items from "./cards.json"
 
     let cards = items;
 
     const add_card = (event) => {
-        event.preventDefault();
-        const form = event.target;
+        event.preventDefault()
+        const form = event.target
         const new_card = {
             front: {
                 title: form["front-title"].value,
@@ -17,7 +17,8 @@
                 content: form["back-content"].value,
             },
         };
-        cards = [...cards, new_card];
+        form.reset()
+        cards = [...cards, new_card]
     };
 </script>
 

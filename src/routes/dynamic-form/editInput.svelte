@@ -209,7 +209,7 @@
                     <label for="options">options</label>
                 </td>
                 <td>
-                    <textarea name="options" cols="30" rows="10" on:change={handle_option}>{ options_str(field.options) }</textarea>
+                    <textarea name="options" cols="30" rows="10" on:change={handle_option} placeholder="label:value:selected<true|false>">{ options_str(field.options) }</textarea>
                 </td>
             </tr>
         {/if}
@@ -268,6 +268,22 @@
 
     table tr td:last-child {
         text-align: left;
+    }
+
+    summary {
+        background-color: #b3d7f5;
+        color: black;
+        padding: 10px;
+        border-radius: 5px;
+        list-style: none;
+
+    }
+
+    details[open] summary {border-radius: 5px 5px 0 0;}
+
+    details {
+        background: #dceaf5;
+        border-radius: 5px;
     }
 
 
